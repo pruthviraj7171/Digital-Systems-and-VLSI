@@ -1,122 +1,92 @@
-# **Topic Name**
+# ISA vs Microarchitecture
+
+`Category: Computer Architecture` `Stage: Theory`
 
 ---
 
-* **Definition**
+- **Definition**
 
-One precise, technical definition of the concept — merges what you had as separate "Overview" and "Definition" sections into one.
-
----
-
-* **Relevance to RTL Design**
-
-2-4 bullet points connecting this concept directly to RTL design or interview relevance — replaces "Why is it needed?"
+The **Instruction Set Architecture (ISA)** is the programmer-visible interface between software and hardware that defines the instructions, registers, data types, memory model, and architectural behavior of a processor. **Microarchitecture** is the internal hardware organization used to implement that ISA, including the datapath, control logic, pipeline, execution units, and memory structures.
 
 ---
 
-* **Technical Overview**
+- **Relevance to RTL Design**
 
-Main explanation, broken into sub-points as needed. This is your core content section.
+* The ISA defines **what** the processor must do, while the microarchitecture defines **how** the processor performs those operations internally.
+* RTL designers implement the **microarchitecture** using hardware description languages such as Verilog or SystemVerilog; the ISA provides the functional requirements that the RTL must satisfy.
+* Understanding this distinction is fundamental when designing processor datapaths, control units, pipelines, register files, and other architectural hardware blocks.
 
 ---
 
-* **Structure / Diagram** *(if applicable)*
+- **Technical Overview**
+
+### Instruction Set Architecture (ISA)
+
+The ISA is the **software-visible contract** between a processor and the programs that execute on it.
+
+It defines aspects such as:
+
+* Instruction set and instruction formats
+* Instruction encoding
+* General-purpose and special-purpose registers
+* Data types and operand sizes
+* Addressing and memory-access rules
+* Control-flow instructions
+* Exceptions and interrupts
+* Privilege and execution modes
+* Architectural memory model
+
+Examples of ISAs include:
+
+* RISC-V
+* ARM
+* x86
+
+The ISA specifies the required behavior of an instruction, but does not normally specify the internal hardware used to achieve that behavior.
+
+### Microarchitecture
+
+Microarchitecture describes the internal organization of a processor that implements a particular ISA.
+
+Typical microarchitectural components include:
+
+* Program Counter (PC)
+* Instruction decoder
+* Register file
+* ALU
+* Control unit
+* Datapath
+* Pipeline registers
+* Branch logic
+* Hazard detection and forwarding logic
+* Cache hierarchy
+* Execution units
+* Memory interfaces
+
+Microarchitecture therefore determines **how instructions are processed inside the processor**.
+
+### ISA as a Contract
+
+The relationship can be viewed as:
 
 ```text
-ASCII diagram — pipeline stages, cache mapping, CDC signal flow, etc.
-```
-
----
-
-* **How It Works**
-
-Step-by-step behavioral explanation, same style as your latch file's "How it works" section.
-
-```text
-Condition A → Result A
-Condition B → Result B
-```
-
----
-
-* **Illustrative Example**
-
-A short worked example with real numbers or a concrete scenario — replaces "Example" and "Working Example."
-
----
-
-* **RTL Code Example** *(only for topics with `.v` code — ALU, CDC, FIFO, etc. — skip this section entirely for pure-theory topics like pipelining/hazards/cache)*
-
-```verilog
-// code here
-```
-
----
-
-* **Code Explanation** *(only if code section is present)*
-
-Line-by-line explanation of what matters in the code.
-
----
-
-* **Comparative Analysis** *(if applicable — e.g. RISC vs CISC, Moore vs Mealy, Sync vs Async CDC)*
-
-| Aspect | A | B |
-|---|---|---|
-| ... | ... | ... |
-
----
-
-* **Common Mistakes / Misconceptions**
-
-- Point 1
-- Point 2
-
----
-
-* **Best Practices**
-
-- Point 1
-- Point 2
-
----
-
-* **Applications**
-
-- Where this concept is actually used in real chips/RTL
-
----
-
-* **Advantages** *(if applicable)*
-
-- Point 1
-
----
-
-* **Limitations** *(if applicable)*
-
-- Point 1
-
----
-
-* **Interview Questions**
-
-**1. Question?**
-
-**Answer:** ...
-
-**2. Question?**
-
-**Answer:** ...
-
-*(5-10 questions, same depth as your latch file)*
-
----
-
-* **Summary**
-
-Single tight bullet list covering the essential facts — replaces the old "Key Points" + "Quick Revision" + "Summary" triple repetition with just one.
-
-- Fact 1
-- Fact 2
-- Fact 3
+             Software
+                 │
+                 ▼
+        ┌─────────────────┐
+        │       ISA       │
+        │   WHAT to do    │
+        └────────┬────────┘
+                 │
+                 │ implemented by
+                 ▼
+        ┌─────────────────┐
+        │ Microarchitecture│
+        │   HOW to do it  │
+        └────────┬────────┘
+                 │
+                 ▼
+            RTL Design
+                 │
+                 ▼
+             Hardware
